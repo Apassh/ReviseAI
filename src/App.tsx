@@ -17,7 +17,7 @@ function App() {
   return (
     <AuthProvider>
       <TooltipProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <Routes>
             <Route element={<MarketingLayout />}>
               <Route path="/" element={<LandingPage />} />
