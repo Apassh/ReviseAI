@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { Logo } from './logo'
 import { Button } from '@/components/ui/button'
+import { useSectionLink } from '@/hooks/use-section-link'
 
 const NAV_LINKS = [
-  { label: 'Comment ça marche', href: '#comment-ca-marche' },
-  { label: 'Fonctionnalités', href: '#fonctionnalites' },
-  { label: 'Tarifs', href: '#tarifs' },
+  { label: 'Comment ça marche', id: 'comment-ca-marche' },
+  { label: 'Fonctionnalités', id: 'fonctionnalites' },
+  { label: 'Tarifs', id: 'tarifs' },
 ]
 
 export function MarketingHeader() {
   const [open, setOpen] = useState(false)
+  const goToSection = useSectionLink()
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--border-subtle)] bg-[var(--background)]/85 backdrop-blur-md">
@@ -21,8 +23,9 @@ export function MarketingHeader() {
         <nav className="hidden items-center gap-7 md:flex">
           {NAV_LINKS.map((link) => (
             <a
-              key={link.href}
-              href={link.href}
+              key={link.id}
+              href={`#${link.id}`}
+              onClick={goToSection(link.id)}
               className="text-sm font-medium text-ink-950/75 transition-colors hover:text-brand-600"
             >
               {link.label}
@@ -55,9 +58,12 @@ export function MarketingHeader() {
           <nav className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
               <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={(e) => {
+                  goToSection(link.id)(e)
+                  setOpen(false)
+                }}
                 className="text-sm font-medium text-ink-950/80"
               >
                 {link.label}

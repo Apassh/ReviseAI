@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { FileUp, Link2, Sparkles, UploadCloud } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
@@ -89,9 +90,9 @@ export function UploadZone({ onAddContent, contentsRemaining }: UploadZoneProps)
       {limitReached && (
         <p className="mt-4 rounded-xl border border-gold-400/50 bg-brand-50 px-4 py-3 text-sm font-medium text-ink-950">
           Tu as atteint ta limite de contenus gratuits ce mois-ci.{' '}
-          <a href="#tarifs" className="font-semibold underline underline-offset-2">
+          <Link to="/abonnement" className="font-semibold underline underline-offset-2">
             Passe à Premium
-          </a>{' '}
+          </Link>{' '}
           pour continuer sans limite.
         </p>
       )}

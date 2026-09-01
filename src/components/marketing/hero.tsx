@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, PlayCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { HeroPreviewCard } from './hero-preview-card'
+import { useSectionLink } from '@/hooks/use-section-link'
 
 export function Hero() {
+  const goToSection = useSectionLink()
+
   return (
     <section className="relative overflow-hidden">
       <div
@@ -38,7 +41,7 @@ export function Hero() {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <a href="#comment-ca-marche">
+              <a href="#comment-ca-marche" onClick={goToSection('comment-ca-marche')}>
                 <PlayCircle className="size-4" /> Voir comment ça marche
               </a>
             </Button>
