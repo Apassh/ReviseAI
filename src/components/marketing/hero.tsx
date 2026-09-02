@@ -25,9 +25,10 @@ export function Hero() {
             Propulsé par l’IA · Pensé pour les étudiants
           </span>
 
-          <h1 className="mt-5 text-balance font-display text-4xl font-black leading-[1.05] tracking-tight text-ink-950 sm:text-5xl md:text-6xl">
-            Investis dans ta réussite,{' '}
-            <span className="bg-brand-gradient bg-clip-text text-transparent">un cours à la fois</span>
+          <h1 className="mt-5 font-display text-4xl font-black leading-[1.05] tracking-tight text-ink-950 sm:text-5xl md:text-6xl">
+            <span className="block">Upload ton cours.</span>
+            <span className="block bg-brand-gradient bg-clip-text text-transparent">Révise intelligemment.</span>
+            <span className="block">Réussis sereinement.</span>
           </h1>
 
           <p className="mt-5 max-w-lg text-balance text-lg text-[var(--muted-foreground)]">
