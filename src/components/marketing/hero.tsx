@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, PlayCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { HeroPreviewCard } from './hero-preview-card'
+import { TrustBadges } from './trust-badges'
 import { useSectionLink } from '@/hooks/use-section-link'
 
 export function Hero() {
@@ -47,7 +48,9 @@ export function Hero() {
             </Button>
           </div>
 
-          <p className="mt-5 text-xs text-[var(--muted-foreground)]">
+          <TrustBadges className="mt-7" />
+
+          <p className="mt-4 text-xs text-[var(--muted-foreground)]">
             Sans carte bancaire · 3 contenus offerts chaque mois
           </p>
         </div>
