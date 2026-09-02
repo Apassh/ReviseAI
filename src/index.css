@@ -116,4 +116,12 @@
     background-color: #fff;
     background-image: radial-gradient(circle at 100% 0%, rgba(147, 51, 234, 0.06), transparent 55%);
   }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
 }

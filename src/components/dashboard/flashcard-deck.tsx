@@ -23,15 +23,25 @@ export function FlashcardDeck({ cards }: { cards: Flashcard[] }) {
       <button
         type="button"
         onClick={() => setFlipped((f) => !f)}
-        className="mt-4 flex aspect-[3/2] w-full max-w-md items-center justify-center rounded-[var(--radius-blob)] border border-[var(--border-subtle)] bg-white p-8 text-center shadow-[var(--shadow-lift)] transition-transform hover:-translate-y-0.5"
-        style={{ perspective: '1000px' }}
+        aria-label={flipped ? 'Voir la question' : 'Voir la réponse'}
+        className="mt-4 aspect-[3/2] w-full max-w-md cursor-pointer"
+        style={{ perspective: '1200px' }}
       >
-        <div>
-          {!flipped && <p className="text-[11px] font-semibold tracking-wide text-brand-600 uppercase">Question</p>}
-          {flipped && <p className="text-[11px] font-semibold tracking-wide text-mint-700 uppercase">Réponse</p>}
-          <p className={cn('mt-3 font-display text-xl font-semibold text-balance', flipped && 'font-sans text-base font-normal')}>
-            {flipped ? card.back : card.front}
-          </p>
+        <div
+          className={cn('preserve-3d relative size-full transition-transform duration-500 ease-out', flipped && '[transform:rotateY(180deg)]')}
+        >
+          <div className="backface-hidden absolute inset-0 flex items-center justify-center rounded-[var(--radius-blob)] border border-[var(--border-subtle)] bg-white p-8 text-center shadow-[var(--shadow-lift)]">
+            <div>
+              <p className="text-[11px] font-semibold tracking-wide text-brand-600 uppercase">Question</p>
+              <p className="mt-3 font-display text-xl font-semibold text-balance">{card.front}</p>
+            </div>
+          </div>
+          <div className="backface-hidden absolute inset-0 flex items-center justify-center rounded-[var(--radius-blob)] border border-mint-200 bg-mint-50 p-8 text-center shadow-[var(--shadow-lift)] [transform:rotateY(180deg)]">
+            <div>
+              <p className="text-[11px] font-semibold tracking-wide text-mint-700 uppercase">Réponse</p>
+              <p className="mt-3 text-base leading-relaxed text-ink-950/85">{card.back}</p>
+            </div>
+          </div>
         </div>
       </button>
 

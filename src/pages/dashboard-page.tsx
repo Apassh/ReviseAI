@@ -1,35 +1,20 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BookOpenCheck, Flame, ListChecks, TrendingUp } from 'lucide-react'
 import { StatCard } from '@/components/dashboard/stat-card'
 import { ContentCard } from '@/components/dashboard/content-card'
 import { UploadZone } from '@/components/dashboard/upload-zone'
 import { useAuth } from '@/hooks/use-auth'
-import { MOCK_CONTENTS, MOCK_STATS } from '@/lib/mock-data'
-import type { ContentItem } from '@/lib/types'
+import { useContentStore } from '@/hooks/use-content-store'
+import { MOCK_STATS } from '@/lib/mock-data'
 import { getPlanById } from '@/lib/pricing-data'
 
 const FREE_MONTHLY_LIMIT = 3
 
 export function DashboardPage() {
   const { user } = useAuth()
-  const [contents, setContents] = useState<ContentItem[]>(MOCK_CONTENTS)
+  const { contents } = useContentStore()
 
   const contentsRemaining = user.plan === 'free' ? Math.max(FREE_MONTHLY_LIMIT - contents.length, 0) : null
-
-  function handleAddContent() {
-    const newContent: ContentItem = {
-      id: `c${Date.now()}`,
-      title: 'Nouveau contenu',
-      subject: 'À catégoriser',
-      sourceType: 'pdf',
-      status: 'processing',
-      progress: 0,
-      createdAt: new Date().toISOString().slice(0, 10),
-      hasFlashcards: false,
-    }
-    setContents((prev) => [newContent, ...prev])
-  }
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
@@ -50,7 +35,7 @@ export function DashboardPage() {
       </div>
 
       <div className="mt-8">
-        <UploadZone onAddContent={handleAddContent} contentsRemaining={contentsRemaining} />
+        <UploadZone contentsRemaining={contentsRemaining} />
       </div>
 
       <div className="mt-10">
