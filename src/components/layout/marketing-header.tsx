@@ -20,7 +20,7 @@ export function MarketingHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <Logo />
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {NAV_LINKS.map((link) => (
             <a
               key={link.id}
@@ -33,7 +33,7 @@ export function MarketingHeader() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2.5 md:flex">
+        <div className="hidden items-center gap-2.5 lg:flex">
           <Button asChild variant="ghost" size="sm">
             <Link to="/connexion">Se connecter</Link>
           </Button>
@@ -45,7 +45,7 @@ export function MarketingHeader() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex size-10 items-center justify-center rounded-xl text-ink-950 md:hidden"
+          className="inline-flex size-10 items-center justify-center rounded-xl text-ink-950 lg:hidden"
           aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
           aria-expanded={open}
         >
@@ -54,7 +54,7 @@ export function MarketingHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-[var(--border-subtle)] bg-[var(--background)] px-5 py-4 md:hidden">
+        <div className="border-t border-[var(--border-subtle)] bg-[var(--background)] px-5 py-4 lg:hidden">
           <nav className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
               <a
