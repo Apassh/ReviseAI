@@ -26,7 +26,7 @@ export function PricingCard({ plan, billingCycle, onSelect, isCurrentPlan, class
   return (
     <div
       className={cn(
-        'relative flex flex-col gap-6 rounded-[var(--radius-card)] border bg-white p-7',
+        'relative z-0 flex flex-col gap-6 rounded-[var(--radius-card)] border bg-white p-7',
         plan.highlighted
           ? 'border-brand-300 shadow-[var(--shadow-lift)] md:-translate-y-2'
           : 'border-[var(--border-subtle)] shadow-[var(--shadow-soft)]',
@@ -34,6 +34,16 @@ export function PricingCard({ plan, billingCycle, onSelect, isCurrentPlan, class
         className,
       )}
     >
+      {(plan.id === 'premium' || plan.id === 'elite') && (
+        <div
+          aria-hidden
+          className={cn(
+            'pointer-events-none absolute -inset-8 -z-10 rounded-[calc(var(--radius-card)+32px)] blur-3xl',
+            plan.id === 'premium' ? 'bg-brand-500/45' : 'bg-gold-500/55',
+          )}
+        />
+      )}
+
       {plan.badgeLabel && (
         <Badge
           variant={plan.id === 'elite' ? 'gold' : 'default'}
