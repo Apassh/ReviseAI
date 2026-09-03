@@ -146,8 +146,9 @@ export function SubscriptionPage() {
                 <DialogHeader>
                   <DialogTitle>Annuler ton abonnement ?</DialogTitle>
                   <DialogDescription>
-                    Tu perdras l’accès aux contenus illimités, aux flashcards et à la collection d’avatars exclusive
-                    à la fin de la période déjà payée. Tu peux te réabonner à tout moment.
+                    Tu perdras l’accès à « {currentPlan.contentLimit.toLowerCase()} », aux flashcards
+                    {user.plan === 'elite' && ' et à la collection d’avatars exclusive'} à la fin de la période déjà
+                    payée. Tu peux te réabonner à tout moment.
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>

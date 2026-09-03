@@ -20,7 +20,12 @@ export interface PricingPlan {
   ctaLabel: string
   highlighted: boolean
   badgeLabel?: string
+  /** Short display label for the content allowance (e.g. "3 fiches / mois"). */
   contentLimit: string
+  /** Number of fiches (PDF or video) allowed per month, or null for unlimited. */
+  monthlyContentLimit: number | null
+  /** Max length of a single video source, in minutes, or null for unlimited. */
+  maxVideoMinutes: number | null
   features: PricingFeature[]
 }
 
@@ -41,11 +46,13 @@ export const PRICING_PLANS: PricingPlan[] = [
     currency: '€',
     ctaLabel: 'Commencer gratuitement',
     highlighted: false,
-    contentLimit: '3 contenus actifs / mois',
+    contentLimit: '3 fiches / mois',
+    monthlyContentLimit: 3,
+    maxVideoMinutes: null,
     features: [
       { label: 'Fiches de révision générées par IA', included: true },
       { label: 'Quiz adaptatif avec feedback instantané', included: true },
-      { label: '3 contenus actifs par mois (PDF ou YouTube)', included: true },
+      { label: '3 fiches par mois (PDF ou vidéo)', included: true },
       { label: 'Flashcards', included: false },
       { label: 'Export PDF des fiches', included: false },
       { label: 'Collection d’avatars exclusive', included: false },
@@ -63,11 +70,14 @@ export const PRICING_PLANS: PricingPlan[] = [
     ctaLabel: 'Passer à Premium',
     highlighted: true,
     badgeLabel: 'Le plus choisi',
-    contentLimit: 'Contenus illimités',
+    contentLimit: '40 fiches / mois',
+    monthlyContentLimit: 40,
+    maxVideoMinutes: 30,
     features: [
       { label: 'Fiches de révision générées par IA', included: true },
       { label: 'Quiz adaptatif avec feedback instantané', included: true },
-      { label: 'Contenus illimités (PDF ou YouTube)', included: true },
+      { label: '40 fiches par mois (PDF ou vidéo)', included: true },
+      { label: 'Vidéos jusqu’à 30 min par vidéo', included: true },
       { label: 'Flashcards illimitées', included: true },
       { label: 'Export PDF des fiches', included: true },
       { label: 'Collection d’avatars exclusive', included: false },
@@ -85,11 +95,14 @@ export const PRICING_PLANS: PricingPlan[] = [
     ctaLabel: 'Passer à Élite',
     highlighted: false,
     badgeLabel: 'Édition complète',
-    contentLimit: 'Contenus illimités',
+    contentLimit: 'Fiches illimitées',
+    monthlyContentLimit: null,
+    maxVideoMinutes: null,
     features: [
       { label: 'Fiches de révision générées par IA', included: true },
       { label: 'Quiz adaptatif avec feedback instantané', included: true },
-      { label: 'Contenus illimités (PDF ou YouTube)', included: true },
+      { label: 'Fiches illimitées (PDF ou vidéo)', included: true },
+      { label: 'Vidéos sans limite de durée', included: true },
       { label: 'Flashcards illimitées', included: true },
       { label: 'Export PDF des fiches', included: true },
       { label: 'Collection d’avatars exclusive Élite', included: true },
@@ -102,6 +115,12 @@ export function getPlanById(id: PlanId): PricingPlan {
   const plan = PRICING_PLANS.find((p) => p.id === id)
   if (!plan) throw new Error(`Unknown plan id: ${id}`)
   return plan
+}
+
+/** The next plan up from the given one (for upsell CTAs), or null once at the top tier. */
+export function getUpgradeTarget(id: PlanId): PricingPlan | null {
+  const index = PRICING_PLANS.findIndex((p) => p.id === id)
+  return PRICING_PLANS[index + 1] ?? null
 }
 
 /** Rounded discount percentage of annual vs monthly billing, for display. */

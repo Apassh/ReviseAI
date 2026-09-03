@@ -52,7 +52,7 @@ export function Hero() {
           <TrustBadges className="mt-7" />
 
           <p className="mt-4 text-xs text-[var(--muted-foreground)]">
-            Sans carte bancaire · 3 contenus offerts chaque mois
+            Sans carte bancaire · 3 fiches offertes chaque mois
           </p>
         </div>
 

@@ -9,19 +9,25 @@ import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
 import { generateLesson } from '@/lib/lesson-generator'
 import { useContentStore } from '@/hooks/use-content-store'
+import { getPlanById, getUpgradeTarget, type PlanId } from '@/lib/pricing-data'
 import type { ContentItem } from '@/lib/types'
 
 interface UploadZoneProps {
-  contentsRemaining: number | null
+  planId: PlanId
+  contentsCount: number
 }
 
 type Stage = 'idle' | 'working' | 'ready' | 'error'
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export function UploadZone({ contentsRemaining }: UploadZoneProps) {
+export function UploadZone({ planId, contentsCount }: UploadZoneProps) {
   const { addContent, setLesson } = useContentStore()
   const navigate = useNavigate()
+
+  const plan = getPlanById(planId)
+  const contentsRemaining = plan.monthlyContentLimit === null ? null : Math.max(plan.monthlyContentLimit - contentsCount, 0)
+  const upgradeTarget = getUpgradeTarget(planId)
 
   const [youtubeUrl, setYoutubeUrl] = useState('')
   const [stage, setStage] = useState<Stage>('idle')
@@ -144,8 +150,7 @@ export function UploadZone({ contentsRemaining }: UploadZoneProps) {
         </div>
         {contentsRemaining !== null && (
           <span className="hidden text-xs font-medium text-[var(--muted-foreground)] sm:inline">
-            {contentsRemaining} contenu{contentsRemaining > 1 ? 's' : ''} gratuit{contentsRemaining > 1 ? 's' : ''} restant
-            {contentsRemaining > 1 ? 's' : ''} ce mois-ci
+            {contentsRemaining} fiche{contentsRemaining > 1 ? 's' : ''} restante{contentsRemaining > 1 ? 's' : ''} ce mois-ci
           </span>
         )}
       </div>
@@ -274,13 +279,13 @@ export function UploadZone({ contentsRemaining }: UploadZoneProps) {
         </div>
       )}
 
-      {limitReached && stage === 'idle' && (
+      {limitReached && stage === 'idle' && upgradeTarget && (
         <p className="mt-4 rounded-xl border border-gold-400/50 bg-brand-50 px-4 py-3 text-sm font-medium text-ink-950">
-          Tu as atteint ta limite de contenus gratuits ce mois-ci.{' '}
+          Tu as atteint ta limite de {plan.monthlyContentLimit} fiches ce mois-ci.{' '}
           <Link to="/abonnement" className="font-semibold underline underline-offset-2">
-            Passe à Premium
+            Passe à {upgradeTarget.name}
           </Link>{' '}
-          pour continuer sans limite.
+          pour {upgradeTarget.monthlyContentLimit === null ? 'des fiches illimitées' : `aller jusqu’à ${upgradeTarget.monthlyContentLimit} fiches par mois`}.
         </p>
       )}
     </div>

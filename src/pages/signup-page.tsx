@@ -36,7 +36,7 @@ export function SignupPage() {
 
           <h1 className="mt-6 font-display text-2xl font-semibold sm:mt-0">Crée ton compte</h1>
           <p className="mt-2 text-sm text-[var(--muted-foreground)]">
-            3 contenus offerts chaque mois. Aucune carte bancaire requise.
+            3 fiches offertes chaque mois. Aucune carte bancaire requise.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-7 flex flex-col gap-4">

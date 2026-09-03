@@ -6,15 +6,13 @@ import { UploadZone } from '@/components/dashboard/upload-zone'
 import { useAuth } from '@/hooks/use-auth'
 import { useContentStore } from '@/hooks/use-content-store'
 import { MOCK_STATS } from '@/lib/mock-data'
-import { getPlanById } from '@/lib/pricing-data'
-
-const FREE_MONTHLY_LIMIT = 3
+import { getUpgradeTarget } from '@/lib/pricing-data'
 
 export function DashboardPage() {
   const { user } = useAuth()
   const { contents } = useContentStore()
 
-  const contentsRemaining = user.plan === 'free' ? Math.max(FREE_MONTHLY_LIMIT - contents.length, 0) : null
+  const upgradeTarget = getUpgradeTarget(user.plan)
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
@@ -35,15 +33,15 @@ export function DashboardPage() {
       </div>
 
       <div className="mt-8">
-        <UploadZone contentsRemaining={contentsRemaining} />
+        <UploadZone planId={user.plan} contentsCount={contents.length} />
       </div>
 
       <div className="mt-10">
         <div className="flex items-center justify-between">
           <h2 className="font-display text-xl font-semibold">Tes contenus</h2>
-          {user.plan === 'free' && (
+          {upgradeTarget && (
             <Link to="/abonnement" className="text-sm font-semibold text-brand-600 hover:underline">
-              Passer à {getPlanById('premium').name}
+              Passer à {upgradeTarget.name}
             </Link>
           )}
         </div>
