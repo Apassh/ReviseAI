@@ -36,7 +36,7 @@ export function AppHeader() {
 
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center gap-2.5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-brand-300">
-            <AvatarDisplay avatarId={user.avatarId} photoUrl={user.avatarPhotoUrl} className="size-9" />
+            <AvatarDisplay avatarId={user.avatarId} className="size-9" />
             <span className="hidden text-sm font-semibold sm:inline">{user.firstName}</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

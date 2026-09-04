@@ -37,7 +37,6 @@ export interface UserProfile {
   email: string
   plan: PlanId
   avatarId: string
-  avatarPhotoUrl?: string
   studyLevel?: string
   memberSince: string
   billingCycle: 'monthly' | 'annual'
