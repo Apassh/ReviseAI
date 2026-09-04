@@ -7,6 +7,7 @@ export const MOCK_USER: UserProfile = {
   email: 'lea.martin@example.com',
   plan: 'premium',
   avatarId: 'grad-3',
+  studyLevel: 'l2',
   memberSince: '2025-09-12',
   billingCycle: 'monthly',
   nextBillingDate: '2026-09-30',

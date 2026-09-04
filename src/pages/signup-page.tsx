@@ -10,20 +10,25 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { useAuth } from '@/hooks/use-auth'
 
 export function SignupPage() {
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [acceptedTerms, setAcceptedTerms] = useState(false)
-  const { login } = useAuth()
+  const { login, updateProfile } = useAuth()
   const navigate = useNavigate()
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
     if (!acceptedTerms) return
     login()
-    navigate('/tableau-de-bord')
+    if (firstName.trim() || lastName.trim()) {
+      updateProfile({ firstName: firstName.trim(), lastName: lastName.trim() })
+    }
+    navigate('/bienvenue')
   }
 
   function handleSocialSignup() {
     login()
-    navigate('/tableau-de-bord')
+    navigate('/bienvenue')
   }
 
   return (
@@ -43,11 +48,25 @@ export function SignupPage() {
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="firstName">Prénom</Label>
-                <Input id="firstName" placeholder="Léa" required autoComplete="given-name" />
+                <Input
+                  id="firstName"
+                  placeholder="Léa"
+                  required
+                  autoComplete="given-name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="lastName">Nom</Label>
-                <Input id="lastName" placeholder="Martin" required autoComplete="family-name" />
+                <Input
+                  id="lastName"
+                  placeholder="Martin"
+                  required
+                  autoComplete="family-name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
               </div>
             </div>
 

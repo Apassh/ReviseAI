@@ -7,6 +7,7 @@ import { ProtectedRoute } from '@/components/layout/protected-route'
 import { LandingPage } from '@/pages/landing-page'
 import { LoginPage } from '@/pages/login-page'
 import { SignupPage } from '@/pages/signup-page'
+import { OnboardingPage } from '@/pages/onboarding-page'
 import { DashboardPage } from '@/pages/dashboard-page'
 import { ProfilePage } from '@/pages/profile-page'
 import { SubscriptionPage } from '@/pages/subscription-page'
@@ -66,6 +67,7 @@ function App() {
 
               <Route path="/connexion" element={<LoginPage />} />
               <Route path="/inscription" element={<SignupPage />} />
+              <Route path="/bienvenue" element={<OnboardingPage />} />
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/tableau-de-bord" element={<DashboardPage />} />

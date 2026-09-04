@@ -11,6 +11,7 @@ interface AuthContextValue {
   setPlan: (plan: PlanId) => void
   setAvatar: (avatarId: string) => void
   setBillingCycle: (cycle: 'monthly' | 'annual') => void
+  updateProfile: (patch: Partial<UserProfile>) => void
 }
 
 const STORAGE_KEY = 'reviseai:session'
@@ -45,9 +46,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser((prev) => ({ ...prev, billingCycle }))
   }, [])
 
+  const updateProfile = React.useCallback((patch: Partial<UserProfile>) => {
+    setUser((prev) => ({ ...prev, ...patch }))
+  }, [])
+
   const value = React.useMemo(
-    () => ({ isAuthenticated, user, login, logout, setPlan, setAvatar, setBillingCycle }),
-    [isAuthenticated, user, login, logout, setPlan, setAvatar, setBillingCycle],
+    () => ({ isAuthenticated, user, login, logout, setPlan, setAvatar, setBillingCycle, updateProfile }),
+    [isAuthenticated, user, login, logout, setPlan, setAvatar, setBillingCycle, updateProfile],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

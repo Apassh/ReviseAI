@@ -37,6 +37,7 @@ export interface UserProfile {
   email: string
   plan: PlanId
   avatarId: string
+  studyLevel?: string
   memberSince: string
   billingCycle: 'monthly' | 'annual'
   nextBillingDate?: string
