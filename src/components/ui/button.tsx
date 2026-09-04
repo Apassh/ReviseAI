@@ -11,6 +11,7 @@ const buttonVariants = cva(
         default:
           'bg-brand-gradient text-white shadow-[var(--shadow-lift)] hover:brightness-110 active:brightness-95',
         mint: 'bg-mint-gradient text-white shadow-[var(--shadow-mint)] hover:brightness-110 active:brightness-95',
+        gold: 'bg-[linear-gradient(135deg,#b45309_0%,#92400e_100%)] text-white shadow-[var(--shadow-lift)] hover:brightness-110 active:brightness-95',
         outline:
           'border border-[var(--border-subtle)] bg-white text-ink-950 hover:bg-brand-50 hover:border-brand-200',
         secondary: 'bg-[var(--muted)] text-ink-950 hover:bg-brand-100',
