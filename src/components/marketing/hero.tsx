@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, PlayCircle } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { HeroPreviewCard } from './hero-preview-card'
 import { TrustBadges } from './trust-badges'
@@ -25,9 +25,9 @@ export function Hero() {
             Propulsé par l’IA · Pensé pour les étudiants
           </span>
 
-          <h1 className="mt-5 whitespace-nowrap font-display text-2xl font-black leading-[1.1] tracking-tight text-ink-950 sm:text-4xl lg:text-3xl xl:text-4xl">
+          <h1 className="mt-5 whitespace-nowrap font-display text-2xl font-black leading-[1.25] tracking-tight text-ink-950 sm:text-4xl lg:text-3xl xl:text-4xl">
             <span className="block">Upload ton cours.</span>
-            <span className="block bg-brand-gradient bg-clip-text text-transparent">Révise intelligemment.</span>
+            <span className="block bg-brand-gradient bg-clip-text pb-1 text-transparent">Révise intelligemment.</span>
             <span className="block">Réussis sereinement.</span>
           </h1>
 
@@ -36,7 +36,7 @@ export function Hero() {
             YouTube : ReviseAI génère ta fiche de révision et ton quiz en quelques secondes.
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+          <div className="mt-8 flex flex-col flex-wrap gap-3 sm:flex-row">
             <Button asChild size="lg">
               <Link to="/inscription">
                 Commencer gratuitement <ArrowRight className="size-4" />
@@ -44,7 +44,7 @@ export function Hero() {
             </Button>
             <Button asChild variant="outline" size="lg">
               <a href="#comment-ca-marche" onClick={goToSection('comment-ca-marche')}>
-                <PlayCircle className="size-4" /> Voir comment ça marche
+                Découvrir comment ça marche
               </a>
             </Button>
           </div>
