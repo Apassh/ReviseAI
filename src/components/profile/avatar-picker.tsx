@@ -1,4 +1,5 @@
-import { Crown, Lock } from 'lucide-react'
+import { useState } from 'react'
+import { Camera, Crown, Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { AVATAR_OPTIONS } from '@/lib/mock-data'
 import type { PlanId } from '@/lib/pricing-data'
@@ -8,10 +9,17 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 
+export const CUSTOM_PHOTO_AVATAR_ID = 'custom-photo'
+
+const MAX_PHOTO_SIZE_BYTES = 5 * 1024 * 1024
+
 interface AvatarPickerProps {
   selectedId: string
   userPlan: PlanId
   onSelect: (id: string) => void
+  photoUrl?: string
+  onPhotoUpload: (dataUrl: string) => void
+  onPhotoRemove: () => void
 }
 
 const GROUPS: { kind: 'gradient' | 'character' | 'elite'; title: string }[] = [
@@ -20,9 +28,75 @@ const GROUPS: { kind: 'gradient' | 'character' | 'elite'; title: string }[] = [
   { kind: 'elite', title: 'Collection exclusive Élite' },
 ]
 
-export function AvatarPicker({ selectedId, userPlan, onSelect }: AvatarPickerProps) {
+export function AvatarPicker({ selectedId, userPlan, onSelect, photoUrl, onPhotoUpload, onPhotoRemove }: AvatarPickerProps) {
+  const [error, setError] = useState<string | null>(null)
+
+  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+
+    if (!file.type.startsWith('image/')) {
+      setError('Choisis un fichier image (JPG, PNG…).')
+      return
+    }
+    if (file.size > MAX_PHOTO_SIZE_BYTES) {
+      setError('Cette image dépasse 5 Mo, choisis-en une plus légère.')
+      return
+    }
+
+    setError(null)
+    const reader = new FileReader()
+    reader.onload = () => onPhotoUpload(reader.result as string)
+    reader.readAsDataURL(file)
+  }
+
   return (
     <div className="flex flex-col gap-6">
+      <div>
+        <h3 className="mb-3 text-sm font-semibold text-ink-950">Photo de profil</h3>
+        <div className="flex items-center gap-3">
+          {photoUrl && (
+            <button
+              type="button"
+              onClick={() => onSelect(CUSTOM_PHOTO_AVATAR_ID)}
+              aria-label="Ta photo de profil"
+              aria-pressed={selectedId === CUSTOM_PHOTO_AVATAR_ID}
+              className={cn(
+                'size-16 shrink-0 overflow-hidden rounded-2xl ring-offset-2 transition-all',
+                selectedId === CUSTOM_PHOTO_AVATAR_ID
+                  ? 'ring-2 ring-brand-500'
+                  : 'ring-1 ring-[var(--border-subtle)] hover:ring-brand-300',
+              )}
+            >
+              <img src={photoUrl} alt="Photo de profil" className="size-full object-cover" />
+            </button>
+          )}
+
+          <label
+            className={cn(
+              'flex size-16 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-2xl border border-dashed text-[var(--muted-foreground)] transition-colors',
+              'border-[var(--border-subtle)] hover:border-brand-400 hover:text-brand-600',
+            )}
+          >
+            <Camera className="size-4.5" />
+            <span className="text-[10px] font-medium">{photoUrl ? 'Changer' : 'Importer'}</span>
+            <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+          </label>
+
+          {photoUrl && (
+            <button
+              type="button"
+              onClick={onPhotoRemove}
+              className="text-xs font-medium text-[var(--muted-foreground)] underline-offset-2 hover:text-rose-accent-600 hover:underline"
+            >
+              Retirer
+            </button>
+          )}
+        </div>
+        {error && <p className="mt-2 text-xs text-rose-accent-600">{error}</p>}
+      </div>
+
       {GROUPS.map((group) => {
         const options = AVATAR_OPTIONS.filter((a) => a.kind === group.kind)
         return (

@@ -4,12 +4,13 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { AvatarDisplay } from '@/components/profile/avatar-display'
-import { AvatarPicker } from '@/components/profile/avatar-picker'
+import { AvatarPicker, CUSTOM_PHOTO_AVATAR_ID } from '@/components/profile/avatar-picker'
 import { PlanBadge } from '@/components/pricing/plan-badge'
 import { useAuth } from '@/hooks/use-auth'
+import { AVATAR_OPTIONS } from '@/lib/mock-data'
 
 export function ProfilePage() {
-  const { user, setAvatar } = useAuth()
+  const { user, setAvatar, updateProfile } = useAuth()
 
   return (
     <main className="mx-auto max-w-4xl px-5 py-10">
@@ -20,7 +21,7 @@ export function ProfilePage() {
         <Card>
           <CardHeader>
             <div className="flex items-center gap-4">
-              <AvatarDisplay avatarId={user.avatarId} className="size-16" emojiClassName="text-2xl" />
+              <AvatarDisplay avatarId={user.avatarId} photoUrl={user.avatarPhotoUrl} className="size-16" emojiClassName="text-2xl" />
               <div>
                 <CardTitle className="flex items-center gap-2">
                   {user.firstName} {user.lastName}
@@ -32,7 +33,14 @@ export function ProfilePage() {
           </CardHeader>
           <CardContent>
             <h3 className="mb-4 text-sm font-semibold text-ink-950">Choisis ton avatar</h3>
-            <AvatarPicker selectedId={user.avatarId} userPlan={user.plan} onSelect={setAvatar} />
+            <AvatarPicker
+              selectedId={user.avatarId}
+              userPlan={user.plan}
+              onSelect={setAvatar}
+              photoUrl={user.avatarPhotoUrl}
+              onPhotoUpload={(dataUrl) => updateProfile({ avatarId: CUSTOM_PHOTO_AVATAR_ID, avatarPhotoUrl: dataUrl })}
+              onPhotoRemove={() => updateProfile({ avatarId: AVATAR_OPTIONS[0].id, avatarPhotoUrl: undefined })}
+            />
             {user.plan !== 'elite' && (
               <p className="mt-5 rounded-xl border border-gold-400/50 bg-brand-50 px-4 py-3 text-sm text-ink-950">
                 Débloque la collection exclusive d’avatars avec la formule Élite.{' '}

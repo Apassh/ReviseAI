@@ -6,9 +6,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { AvatarDisplay } from '@/components/profile/avatar-display'
-import { AvatarPicker } from '@/components/profile/avatar-picker'
+import { AvatarPicker, CUSTOM_PHOTO_AVATAR_ID } from '@/components/profile/avatar-picker'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/use-auth'
+import { AVATAR_OPTIONS } from '@/lib/mock-data'
 import { STUDY_LEVELS } from '@/lib/study-levels'
 
 const LEVEL_GROUPS = ['Lycée', 'Études supérieures', 'Autre'] as const
@@ -20,6 +21,7 @@ export function OnboardingPage() {
   const [firstName, setFirstName] = useState(user.firstName)
   const [lastName, setLastName] = useState(user.lastName)
   const [avatarId, setAvatarId] = useState(user.avatarId)
+  const [photoUrl, setPhotoUrl] = useState(user.avatarPhotoUrl)
   const [studyLevel, setStudyLevel] = useState(user.studyLevel ?? '')
 
   if (!isAuthenticated) {
@@ -31,7 +33,7 @@ export function OnboardingPage() {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
     if (!canContinue) return
-    updateProfile({ firstName: firstName.trim(), lastName: lastName.trim(), avatarId, studyLevel })
+    updateProfile({ firstName: firstName.trim(), lastName: lastName.trim(), avatarId, avatarPhotoUrl: photoUrl, studyLevel })
     navigate('/tableau-de-bord')
   }
 
@@ -65,12 +67,25 @@ export function OnboardingPage() {
           </div>
 
           <div className="mt-8 flex flex-col items-center gap-3">
-            <AvatarDisplay avatarId={avatarId} className="size-20" emojiClassName="text-3xl" />
+            <AvatarDisplay avatarId={avatarId} photoUrl={photoUrl} className="size-20" emojiClassName="text-3xl" />
             <p className="text-sm font-medium text-ink-950">Choisis ta photo de profil</p>
           </div>
 
           <div className="mt-5">
-            <AvatarPicker selectedId={avatarId} userPlan={user.plan} onSelect={setAvatarId} />
+            <AvatarPicker
+              selectedId={avatarId}
+              userPlan={user.plan}
+              onSelect={setAvatarId}
+              photoUrl={photoUrl}
+              onPhotoUpload={(dataUrl) => {
+                setPhotoUrl(dataUrl)
+                setAvatarId(CUSTOM_PHOTO_AVATAR_ID)
+              }}
+              onPhotoRemove={() => {
+                setPhotoUrl(undefined)
+                setAvatarId(AVATAR_OPTIONS[0].id)
+              }}
+            />
           </div>
 
           <div className="mt-9 grid grid-cols-1 gap-4 sm:grid-cols-2">

@@ -87,6 +87,7 @@ export const AVATAR_OPTIONS: AvatarOption[] = [
   { id: 'grad-2', kind: 'gradient', label: 'Menthe', swatch: 'linear-gradient(135deg,#17ab88,#a4f2da)' },
   { id: 'grad-3', kind: 'gradient', label: 'Crépuscule', swatch: 'linear-gradient(135deg,#6817ab,#fb5c86)' },
   { id: 'grad-4', kind: 'gradient', label: 'Océan', swatch: 'linear-gradient(135deg,#1f5fbf,#35c9a3)' },
+  { id: 'grad-gold', kind: 'gradient', label: 'Éclat doré', swatch: 'linear-gradient(135deg,var(--color-gold-300),var(--color-gold-600))', requiresPlan: 'elite' },
   { id: 'char-1', kind: 'character', label: 'Studieux', emoji: '🦉' },
   { id: 'char-2', kind: 'character', label: 'Motivé', emoji: '🐯' },
   { id: 'char-3', kind: 'character', label: 'Zen', emoji: '🐨' },
