@@ -49,10 +49,10 @@ export function HeroPreviewCard({ className }: { className?: string }) {
 
         <div className="mt-5 flex items-center justify-between border-t border-[var(--border-subtle)] pt-4">
           <p className="text-xs font-medium text-[var(--muted-foreground)]">Progression de la fiche</p>
-          <p className="text-xs font-semibold text-mint-700">78%</p>
+          <p className="text-xs font-semibold text-brand-600">78%</p>
         </div>
         <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-[var(--muted)]">
-          <div className="h-full w-[78%] rounded-full bg-mint-gradient" />
+          <div className="h-full w-[78%] rounded-full bg-brand-gradient" />
         </div>
       </div>
     </div>
